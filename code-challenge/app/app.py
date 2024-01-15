@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, make_response
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from models import db, Hero, Power, HeroPower
+from models import Hero, Power, HeroPower,db 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-migrate = Migrate(app, db)
-
 db.init_app(app)
+migrate = Migrate(app, db)  
+
+
+
 
 # Routes for Heroes
 @app.route('/heroes', methods=['GET'])
